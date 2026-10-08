@@ -1,0 +1,7 @@
+{
+  "main": "ruleset.yaml",
+  "name": "MCP Server Safety",
+  "description": "Safety checks for MCP server manifests: declared authentication, declared tool side effects and reach, and closed tool inputs.",
+  "assetId": "mcp-server-safety",
+  "version": "1.0.0"
+}

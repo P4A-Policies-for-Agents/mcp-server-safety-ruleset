@@ -1,0 +1,34 @@
+#%Validation Profile 1.0
+profile: MCP Server Safety
+description: >-
+  Safety checks for MCP server manifests: the server declares how clients authenticate,
+  every tool declares its side effects and whether it reaches outside systems, and tool
+  inputs reject undeclared fields. Pairs with MCP Server Usability and with MuleSoft's
+  Agent Network Best Practices (transport and protocol version).
+prefixes:
+  mcp: http://anypoint.com/vocabs/mcp#
+violation:
+  - server-auth-declared
+validations:
+  server-auth-declared:
+    message: The MCP server declares no security scheme. Add at least one entry under securitySchemes (for example an HTTP bearer or OAuth 2.0 scheme).
+    documentation: |
+      Agents and gateways decide how to call a server from its manifest. A server that declares
+      no security scheme is either open to anyone or protected in a way clients cannot discover,
+      and both lead to unauthenticated tool calls or failed connections. Declare every scheme the
+      server accepts so gateways can enforce it and agents can obtain the right credentials.
+      Note: an empty securitySchemes map ({}) is not detected; see the README.
+    examples:
+      valid: |
+        securitySchemes:
+          bearer:
+            type: http
+            scheme: bearer
+      invalid: |
+        tools:
+          - name: get_weather
+        # no securitySchemes
+    targetClass: mcp.Server
+    propertyConstraints:
+      core.securitySchemes:
+        minCount: 1
