@@ -10,6 +10,8 @@ prefixes:
 violation:
   - server-auth-declared
   - tool-side-effect-hint-declared
+warning:
+  - tool-open-world-hint-declared
 validations:
   server-auth-declared:
     message: The MCP server declares no security scheme. Add at least one entry under securitySchemes (for example an HTTP bearer or OAuth 2.0 scheme).
@@ -67,3 +69,32 @@ validations:
             - propertyConstraints:
                 core.destructiveHint:
                   minCount: 1
+  tool-open-world-hint-declared:
+    message: The tool does not say whether it reaches outside systems. Set annotations.openWorldHint (true if it talks to the internet or third-party services, false if it only touches the server's own data).
+    documentation: |
+      openWorldHint tells clients whether a tool's effects stay inside a closed domain or reach
+      an open one (web search, email, third-party APIs). Gateways and agents use it to apply
+      stricter data-loss and prompt-injection controls to open-world tools, whose inputs and
+      outputs can carry untrusted content. MCP defaults it to true when it is absent, so tools
+      that only touch local data are over-restricted and real open-world tools go unnoticed.
+      This rule only checks tools that have an annotations object; tools without one are
+      reported by tool-side-effect-hint-declared.
+    examples:
+      valid: |
+        tools:
+          - name: get_weather
+            annotations:
+              readOnlyHint: true
+              openWorldHint: true
+      invalid: |
+        tools:
+          - name: get_weather
+            annotations:
+              readOnlyHint: true
+    targetClass: mcp.Tool
+    propertyConstraints:
+      core.annotations:
+        nested:
+          propertyConstraints:
+            core.openWorldHint:
+              minCount: 1
