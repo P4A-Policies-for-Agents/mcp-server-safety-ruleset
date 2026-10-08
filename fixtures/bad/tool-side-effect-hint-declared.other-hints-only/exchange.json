@@ -1,0 +1,9 @@
+{
+  "main": "mcp-metadata.json",
+  "name": "bad-tool-side-effect-hint-declared-other-hints-only",
+  "groupId": "p4a-fixtures",
+  "assetId": "bad-tool-side-effect-hint-declared-other-hints-only",
+  "version": "1.0.0",
+  "classifier": "mcp-metadata",
+  "descriptorVersion": "1.0.0"
+}

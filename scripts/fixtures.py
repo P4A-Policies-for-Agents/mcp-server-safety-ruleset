@@ -92,6 +92,13 @@ def tool(d, i=0):
 
 BAD = {
     "server-auth-declared": lambda d: d.pop("securitySchemes"),
+    "tool-side-effect-hint-declared": lambda d: tool(d).pop("annotations"),
+    # Review Focus 1: annotations exist but neither side-effect hint is set.
+    "tool-side-effect-hint-declared.other-hints-only": lambda d: tool(d).__setitem__(
+        "annotations", {"title": "Weather", "openWorldHint": True}
+    ),
+    # Review Focus 4: only the second tool is missing its hint.
+    "tool-side-effect-hint-declared.second-tool": lambda d: tool(d, 1)["annotations"].pop("destructiveHint"),
 }
 
 

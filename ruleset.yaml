@@ -9,6 +9,7 @@ prefixes:
   mcp: http://anypoint.com/vocabs/mcp#
 violation:
   - server-auth-declared
+  - tool-side-effect-hint-declared
 validations:
   server-auth-declared:
     message: The MCP server declares no security scheme. Add at least one entry under securitySchemes (for example an HTTP bearer or OAuth 2.0 scheme).
@@ -32,3 +33,37 @@ validations:
     propertyConstraints:
       core.securitySchemes:
         minCount: 1
+  tool-side-effect-hint-declared:
+    message: The tool does not declare its side effects. Set annotations.readOnlyHint (true for read-only tools) or annotations.destructiveHint (true or false for tools that change state).
+    documentation: |
+      MCP clients and gateways use tool annotations to decide whether a call needs human
+      confirmation, can be retried, or may run unattended. When neither readOnlyHint nor
+      destructiveHint is set, clients must assume the worst (MCP's defaults are "not read-only"
+      and "destructive"), or worse, guess. Declaring one explicitly lets safe tools run
+      without prompts and makes destructive tools visible to approval policies.
+    examples:
+      valid: |
+        tools:
+          - name: get_weather
+            annotations:
+              readOnlyHint: true
+          - name: set_alert_threshold
+            annotations:
+              destructiveHint: false
+      invalid: |
+        tools:
+          - name: delete_city
+            annotations:
+              title: Delete city
+    targetClass: mcp.Tool
+    propertyConstraints:
+      core.annotations:
+        minCount: 1
+        nested:
+          or:
+            - propertyConstraints:
+                core.readOnlyHint:
+                  minCount: 1
+            - propertyConstraints:
+                core.destructiveHint:
+                  minCount: 1
