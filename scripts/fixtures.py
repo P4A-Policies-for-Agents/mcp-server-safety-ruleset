@@ -100,6 +100,8 @@ BAD = {
     # Review Focus 4: only the second tool is missing its hint.
     "tool-side-effect-hint-declared.second-tool": lambda d: tool(d, 1)["annotations"].pop("destructiveHint"),
     "tool-open-world-hint-declared": lambda d: tool(d)["annotations"].pop("openWorldHint"),
+    "tool-input-closed.missing": lambda d: tool(d)["inputSchema"].pop("additionalProperties"),
+    "tool-input-closed.true": lambda d: tool(d)["inputSchema"].__setitem__("additionalProperties", True),
 }
 
 

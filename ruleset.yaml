@@ -12,6 +12,7 @@ violation:
   - tool-side-effect-hint-declared
 warning:
   - tool-open-world-hint-declared
+  - tool-input-closed
 validations:
   server-auth-declared:
     message: The MCP server declares no security scheme. Add at least one entry under securitySchemes (for example an HTTP bearer or OAuth 2.0 scheme).
@@ -98,3 +99,32 @@ validations:
           propertyConstraints:
             core.openWorldHint:
               minCount: 1
+  tool-input-closed:
+    message: The tool's input schema accepts undeclared fields. Set additionalProperties to false in inputSchema.
+    documentation: |
+      A tool input schema that allows additional properties lets a model (or an injected prompt)
+      send fields the server never declared. Servers that pass arguments through to downstream
+      APIs can then be steered into behavior the tool's contract does not describe, and gateways
+      cannot validate what they cannot see. additionalProperties: false makes the declared schema
+      the whole contract. This rule reports a missing additionalProperties as well as true.
+    examples:
+      valid: |
+        tools:
+          - name: get_weather
+            inputSchema:
+              type: object
+              additionalProperties: false
+              properties:
+                location: { type: string }
+      invalid: |
+        tools:
+          - name: get_weather
+            inputSchema:
+              type: object
+              properties:
+                location: { type: string }
+    targetClass: mcp.ToolInputSchema
+    propertyConstraints:
+      core.additionalProperties:
+        minCount: 1
+        in: [false]

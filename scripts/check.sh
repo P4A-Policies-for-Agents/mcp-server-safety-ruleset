@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 # --- per-repo config ---
-EXPECTED_AUTHORING_WARNINGS=0   # Task 4 raises this to 1 (README "Known authoring warning")
+EXPECTED_AUTHORING_WARNINGS=1   # README "Known authoring warning"
 SIBLING_GOOD=../mcp-server-usability-ruleset/fixtures/good
 # -----------------------
 
