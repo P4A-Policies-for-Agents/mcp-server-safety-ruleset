@@ -25,8 +25,8 @@ Every rule follows a red/green cycle: add the mutation, see `check.sh` fail, add
 **Spec:** `docs/superpowers/specs/2026-10-08-mcp-server-rulesets-design.md` (in this repo)
 
 **Repos (already created, cloned, `.envrc` allowed, default branch `main`):**
-- `S` = `/Users/tbolis/ClaudeProjects/p4a/ms-omni-governance-rulesets/mcp-server-safety-ruleset` (already has the spec commit pushed)
-- `U` = `/Users/tbolis/ClaudeProjects/p4a/ms-omni-governance-rulesets/mcp-server-usability-ruleset` (empty, no commits)
+- `S` = `<workspace>/mcp-server-safety-ruleset` (already has the spec commit pushed)
+- `U` = `<workspace>/mcp-server-usability-ruleset` (empty, no commits)
 
 ## Global Constraints
 
