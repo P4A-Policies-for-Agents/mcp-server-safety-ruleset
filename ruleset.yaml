@@ -77,7 +77,8 @@ validations:
       an open one (web search, email, third-party APIs). Gateways and agents use it to apply
       stricter data-loss and prompt-injection controls to open-world tools, whose inputs and
       outputs can carry untrusted content. MCP defaults it to true when it is absent, so tools
-      that only touch local data are over-restricted and real open-world tools go unnoticed.
+      that only touch local data are over-restricted, and how every tool is treated rests on a
+      default instead of on what its author declared.
       This rule only checks tools that have an annotations object; tools without one are
       reported by tool-side-effect-hint-declared.
     examples:
