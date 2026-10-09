@@ -32,7 +32,8 @@ validations:
         tools:
           - name: get_weather
         # no securitySchemes
-    targetClass: mcp.Server
+    # Plugin 1.1.x types the manifest root as core:encodes, not mcp:Server (README "Known authoring error").
+    targetClass: core.encodes
     propertyConstraints:
       core.securitySchemes:
         minCount: 1
@@ -60,15 +61,15 @@ validations:
               title: Delete city
     targetClass: mcp.Tool
     propertyConstraints:
-      core.annotations:
+      mcp.annotations:
         minCount: 1
         nested:
           or:
             - propertyConstraints:
-                core.readOnlyHint:
+                mcp.readOnlyHint:
                   minCount: 1
             - propertyConstraints:
-                core.destructiveHint:
+                mcp.destructiveHint:
                   minCount: 1
   tool-open-world-hint-declared:
     message: The tool does not say whether it reaches outside systems. Set annotations.openWorldHint (true if it talks to the internet or third-party services, false if it only touches the server's own data).
@@ -95,10 +96,10 @@ validations:
               readOnlyHint: true
     targetClass: mcp.Tool
     propertyConstraints:
-      core.annotations:
+      mcp.annotations:
         nested:
           propertyConstraints:
-            core.openWorldHint:
+            mcp.openWorldHint:
               minCount: 1
   tool-input-closed:
     message: The tool's input schema accepts undeclared fields. Set additionalProperties to false in inputSchema.
@@ -126,6 +127,6 @@ validations:
                 location: { type: string }
     targetClass: mcp.ToolInputSchema
     propertyConstraints:
-      core.additionalProperties:
+      mcp.additionalProperties:
         minCount: 1
         in: [false]
