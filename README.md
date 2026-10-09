@@ -31,6 +31,23 @@ This ruleset is published through the P4A catalog (https://www.p4a.ai). Open its
 
 `governance:ruleset:validate-authoring` reports one warning: `in` is used on `core.additionalProperties`. This is intentional. It's the only constraint that tells `false` apart from `true` or a missing value, and it works at validation time (see `fixtures/bad/tool-input-closed.*`).
 
+## Test on Exchange assets
+
+To try the ruleset on real assets, publish the fixtures to a test business group, then attach
+the ruleset to them, for example with a draft governance profile. Copy `.env.example` to `.env`
+and fill in a connected app and business group ID; `.env` is gitignored.
+
+```bash
+scripts/publish-examples.sh --dry-run   # list the assets
+scripts/publish-examples.sh             # <prefix>-ok plus one <prefix>-<rule-id> per rule
+scripts/publish-examples.sh --all       # also every bad variant and the scope fixtures
+scripts/cleanup-examples.sh             # soft-delete them all after testing (--hard, --yes)
+```
+
+`<prefix>-ok` should give 0 findings, and each `<prefix>-<rule-id>` exactly the finding named in
+its description. Publishing skips versions that already exist; to republish changed fixtures,
+clean up first or set `EXAMPLES_VERSION`.
+
 ## Development
 
 ```bash
