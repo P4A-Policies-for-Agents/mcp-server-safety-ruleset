@@ -66,8 +66,8 @@ lint() {
   grep -qE '^profile: .+' "$RULESET" || fail "missing non-empty 'profile:' name"
   grep -qx '  mcp: http://anypoint.com/vocabs/mcp#' "$RULESET" \
     || fail "missing 'prefixes: mcp: http://anypoint.com/vocabs/mcp#' (validator panics without it)"
-  # Plugin 1.1.x models MCP element fields as mcp.*; only the server's securitySchemes stays core.*.
-  if grep -nE '^ +core\.[A-Za-z]+:' "$RULESET" | grep -v 'core\.securitySchemes:'; then
+  # Plugin 1.1.x models MCP element fields as mcp.*; only manifest-root fields stay core.*.
+  if grep -nE '^ +core\.[A-Za-z]+:' "$RULESET" | grep -vE 'core\.(securitySchemes|tools|resources|prompts):'; then
     fail "MCP element paths must use mcp.*, not core.* (lines above)"
   fi
   listed=$({ severity_ids violation; severity_ids warning; severity_ids info; } | sort)
