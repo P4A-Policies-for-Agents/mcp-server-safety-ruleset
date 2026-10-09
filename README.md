@@ -27,6 +27,7 @@ This ruleset is published through the P4A catalog (https://www.p4a.ai). Open its
 
 ## Limitations
 
+- **Manifest-level rules key on `transport`.** `server-auth-declared` checks only documents with a `transport` field, which the MCP schema requires and A2A Agent Cards don't have. That keeps it off Agent Cards attached to the same profile (`fixtures/scope/`).
 - **Per-parameter checks are not possible yet.** Bounded strings, described parameters and typed parameters all need access to individual input-schema properties. In governance plugin 1.0.21 the MCP model exposes input `properties` only as an opaque value, and custom Rego rules are not supported for MCP assets.
 - **An empty `securitySchemes: {}` passes `server-auth-declared`.** Profiles can check that the key is present but not count its entries.
 - **Hints are declarations, not proof.** The ruleset checks that annotations are declared, not that they are true. Runtime enforcement belongs in gateway policies.
